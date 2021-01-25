@@ -4,6 +4,15 @@
     //Validamos que hayan seleccionado tipo de decimales
     var rbPuntoDecimal =  document.getElementById("MainContent_rbdDecimales_0");
     var rbComaDecimal = document.getElementById("MainContent_rbdDecimales_1");
+    var ddlBancos = document.getElementById("MainContent_ddlBancos");
+
+
+    if (ddlBancos.value  == 0) {
+        alert('No se seleccionó cuál es el banco');
+        return false;
+    }
+
+
 
     if (rbPuntoDecimal.checked == false && rbComaDecimal.checked == false)
     {

@@ -18,6 +18,16 @@
 
     <br />
     <br />
+    <br />
+    Banco<br />
+    <asp:DropDownList ID="ddlBancos" runat="server" CssClass="btn btn-primary">
+        <asp:ListItem Selected="True" Value="0">Banco</asp:ListItem>
+        <asp:ListItem Value="1">Santander</asp:ListItem>
+        <asp:ListItem Value="2">ICBC</asp:ListItem>
+        <asp:ListItem Value="3">Galicia</asp:ListItem>
+    </asp:DropDownList>
+    <br />
+    <br />
     <asp:Label ID="lblBanco" runat="server" Text="Archivo Banco"></asp:Label>
     <br />
     <asp:FileUpload ID="fuBanco" runat="server"  class="btn btn-primary"/>    
@@ -26,6 +36,7 @@
     <asp:Label ID="lblOctopus" runat="server" Text="Archivo Octopus"></asp:Label>
     <br />
     <asp:FileUpload ID="fuOctopus" runat="server" class="btn btn-primary" />
+    <br />
     <br />
     <br />
     <asp:RadioButtonList ID="rbdDecimales" runat="server" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
