@@ -1,0 +1,147 @@
+ body {
+	margin: 0;
+	padding: 0;
+ }
+ 
+ #background 
+{ 
+	 left: 0px; 
+	 top: 0px; 
+	 position: relative; 
+	 margin-left: auto; 
+	 margin-right: auto; 
+	 width: 800px;
+	 height: 561px; 
+	 overflow: hidden;
+	 z-index:0;
+	} 
+
+ #bg 
+{ 
+	 left: -221px; 
+	 top: -65px; 
+	 position: absolute; 
+	 width: 1280px;
+	 height: 800px;
+	 z-index:1;
+} 
+
+ #Shape8 
+{ 
+	 left: 264px; 
+	 top: 184px; 
+	 position: absolute; 
+	 width: 304px;
+	 height: 46px;
+	 z-index:2;
+} 
+
+ #Username 
+{ 
+	 left: 280px; 
+	 top: 202px; 
+	 position: absolute; 
+	 width: 59px;
+	 height: 11px;
+	 z-index:3;
+} 
+
+ #error 
+{ 
+	 left: 583px; 
+	 top: 186px; 
+	 position: absolute; 
+	 width: 42px;
+	 height: 42px;
+	 z-index:4;
+} 
+
+ #layer_5 
+{ 
+	 left: 596px; 
+	 top: 199px; 
+	 position: absolute; 
+	 width: 16px;
+	 height: 16px;
+	 z-index:5;
+} 
+
+ #Shape8copy 
+{ 
+	 left: 264px; 
+	 top: 254px; 
+	 position: absolute; 
+	 width: 304px;
+	 height: 46px;
+	 z-index:6;
+} 
+
+ #Password 
+{ 
+	 left: 280px; 
+	 top: 272px; 
+	 position: absolute; 
+	 width: 55px;
+	 height: 11px;
+	 z-index:7;
+} 
+
+ #Shape9 
+{ 
+	 left: 264px; 
+	 top: 323px; 
+	 position: absolute; 
+	 width: 304px;
+	 height: 46px;
+	 z-index:8;
+} 
+
+ #Signmein 
+{ 
+	 left: 385px; 
+	 top: 340px; 
+	 position: absolute; 
+	 width: 63px;
+	 height: 13px;
+	 z-index:9;
+} 
+
+ #Login 
+{ 
+	 left: 381px; 
+	 top: 116px; 
+	 position: absolute; 
+	 width: 70px;
+	 height: 29px;
+	 z-index:10;
+} 
+
+ #Shape3 
+{ 
+	 left: 387px; 
+	 top: 439px; 
+	 position: absolute; 
+	 width: 16px;
+	 height: 29px;
+	 z-index:11;
+} 
+
+ #Shape4 
+{ 
+	 left: 416px; 
+	 top: 441px; 
+	 position: absolute; 
+	 width: 32px;
+	 height: 25px;
+	 z-index:12;
+} 
+
+ #Orconnectwith 
+{ 
+	 left: 353px; 
+	 top: 405px; 
+	 position: absolute; 
+	 width: 127px;
+	 height: 14px;
+	 z-index:13;
+} 
