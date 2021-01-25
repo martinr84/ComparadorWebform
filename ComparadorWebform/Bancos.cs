@@ -9,7 +9,7 @@ namespace ComparadorWebform
     {
         public const int Santander = 1;
         public const int ICBC = 2;
-        public const int Galicia = 3;
+        public const int Galicia = 3; 
 
     }
 }
