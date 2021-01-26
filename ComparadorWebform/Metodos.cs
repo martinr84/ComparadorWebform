@@ -52,7 +52,7 @@ namespace ComparadorWebform
 
             sumatoriaCodigosBancoExcluidos = CalcularSumatoriaCodigosExcluidosBancos(banco, infoBanco);
 
-            GenerarReporteTXT(infoBancoNoEnOctopus, infoOctopusNoEnBanco, sumatoriaCodigosBancoExcluidos);
+           // GenerarReporteTXT(infoBancoNoEnOctopus, infoOctopusNoEnBanco, sumatoriaCodigosBancoExcluidos);
             oWorkbook = GenerarReporteExcel(banco, infoBancoNoEnOctopus, infoOctopusNoEnBanco, sumatoriaCodigosBancoExcluidos);
 
 
@@ -74,7 +74,7 @@ namespace ComparadorWebform
                     break;
 
                 case Bancos.Galicia:
-                    Console.WriteLine("Case 2");
+                    ProcesarExcelBancoGalicia(infoBanco, separadorMilesAmericano, archivoBanco, separadorMilesAmericano);
                     break;
 
             }
@@ -283,6 +283,98 @@ namespace ComparadorWebform
         }
 
 
+
+        public string[,] ProcesarExcelBancoGalicia(string[,] infoBanco, bool separadorMilesAmericanostring, string archivoBanco, bool separadorMilesAmericano)
+        {
+
+            var oWorkbook = new XLWorkbook(archivoBanco);
+            var oWorksheet = oWorkbook.Worksheet(1);
+
+            int j = 0;
+
+         
+            for (int i = 2; i < 200; i++)
+            {
+
+                //int test;
+                //bool esNumerico;
+                //esNumerico = int.TryParse(oWorksheet.Cell(i, 2).Value.ToString(), out test);
+
+
+         
+                if (!string.IsNullOrEmpty(oWorksheet.Cell(i, 1).Value.ToString()) )
+                {
+                    infoBanco[j, 0] = oWorksheet.Cell(i, 1).Value.ToString();
+
+                    //codigo
+                    //Galicia no tiene código
+                    //double codigo = Convert.ToDouble(oWorksheet.Cell(i, 2).Value.ToString());
+                    //infoBanco[j, 1] = codigo.ToString();
+
+
+                    //concepto
+                    infoBanco[j, 2] = oWorksheet.Cell(i, 2).Value.ToString();
+
+                    //importe
+                    double importeAmericano;
+                    string importeString;
+
+                    if (oWorksheet.Cell(i, 4).Value.ToString() == "0")
+                        importeString = oWorksheet.Cell(i, 5).Value.ToString();
+                    else
+                        importeString = "-" + oWorksheet.Cell(i, 4).Value.ToString();
+
+
+                    if (separadorMilesAmericano == true)
+                    {
+                        importeAmericano = Convert.ToDouble(importeString);
+                        infoBanco[j, 3] = importeAmericano.ToString();
+                    }
+
+
+                    else
+                    {
+                        //importeString = oWorksheet.Cell(i, 7).Value.ToString();
+
+                        if (importeString.Contains("("))
+                        {
+                            //importeString.Replace("(", "").Replace(")","");
+                            importeString.Replace("(", "");
+
+                            importeString = importeString.Replace("(", "").Replace(")", "");
+                            importeString = "-" + importeString;
+
+                        }
+                        //Si es importe es formato americano (coma separa miles y punto decimales)
+                        if (separadorMilesAmericano == false)
+                        {
+                            //ESTO ES CLAVE EN IIS NO HAY QUE PONERLO PERO PARA DESARROLLO SI
+                            //importeString = importeString.Replace(".", "").Replace(",", ".");
+                        }
+
+
+
+                        decimal sacarDecimalesVacios;
+                        sacarDecimalesVacios = Convert.ToDecimal(importeString) / 1.00m;
+
+                        infoBanco[j, 3] = sacarDecimalesVacios.ToString();
+
+
+                    }
+                    j++;
+                }//end if 
+
+                // i=i+1;
+
+            }//end for
+
+            //xlWorkBook.Close(true, null, null);
+            //xlApp.Quit();
+            return infoBanco;
+
+        }
+
+
         public string[,] ProcesarExcelOctopus(string[,] infoOctopus, string archivoOctopus)
         {
             // Application xlApp;
@@ -372,7 +464,7 @@ namespace ComparadorWebform
                     break;
 
                 case Bancos.Galicia:
-                    Console.WriteLine("Case 2");
+                    ProcesarDiferenciasBancoGaliciaNoEnOctopus(banco, infoBanco, infoOctopus, infoBancoNoEnOctopus);
                     break;
 
             }
@@ -444,7 +536,7 @@ namespace ComparadorWebform
                 while (!string.IsNullOrEmpty(infoOctopus[j, 0]))
                 {
                     if (!infoBanco[i, 1].Contains("259") && !infoBanco[i, 1].Contains("260") && !infoBanco[i, 1].Contains("212")
-                      || !infoBanco[i, 1].Contains("207") && !infoBanco[i, 1].Contains("206") && !infoBanco[i, 1].Contains("515") )
+                      && !infoBanco[i, 1].Contains("207") && !infoBanco[i, 1].Contains("206") && !infoBanco[i, 1].Contains("515") )
                     {
                         if (infoBanco[i, 3] == infoOctopus[j, 4])
                         {
@@ -458,6 +550,56 @@ namespace ComparadorWebform
                 if (montoEncontrado == false
                        && !infoBanco[i, 1].Contains("259") && !infoBanco[i, 1].Contains("260") && !infoBanco[i, 1].Contains("212")
                       && !infoBanco[i, 1].Contains("207") && !infoBanco[i, 1].Contains("206") && !infoBanco[i, 1].Contains("515") )
+                {
+                    infoBancoNoEnOctopus[t, 0] = infoBanco[i, 0];
+                    infoBancoNoEnOctopus[t, 1] = infoBanco[i, 1];
+                    infoBancoNoEnOctopus[t, 2] = infoBanco[i, 2];
+                    infoBancoNoEnOctopus[t, 3] = infoBanco[i, 3];
+                    t++;
+                }
+                i++;
+            }
+            return infoBancoNoEnOctopus;
+        }
+
+
+        public string[,] ProcesarDiferenciasBancoGaliciaNoEnOctopus(int banco, string[,] infoBanco, string[,] infoOctopus, string[,] infoBancoNoEnOctopus)
+        {
+            int i = 0;
+            int t = 0;
+
+
+
+            while (!string.IsNullOrEmpty(infoBanco[i, 0]))
+            {
+
+                bool montoEncontrado = false;
+
+                int j = 0;
+
+
+
+                while (!string.IsNullOrEmpty(infoOctopus[j, 0]))
+                {
+                    if (!infoBanco[i, 2].Contains("IMP. DEB. LEY 25413 GRAL.")
+                        && !infoBanco[i, 2].Contains("IMP. CRE. LEY 25413 GRAL.")
+                        && !infoBanco[i, 2].Contains("COMISION MANTENIMIENTO CTA. CTE/CCE")
+                      && !infoBanco[i, 2].Contains("IVA")                    )
+                    {
+                        if (infoBanco[i, 3] == infoOctopus[j, 4])
+                        {
+                            montoEncontrado = true;
+                            break;
+                        }
+                    }
+                    j++;
+
+                }
+                if (montoEncontrado == false
+                       && !infoBanco[i, 2].Contains("IMP. DEB. LEY 25413 GRAL.")
+                        && !infoBanco[i, 2].Contains("IMP. CRE. LEY 25413 GRAL.")
+                        && !infoBanco[i, 2].Contains("COMISION MANTENIMIENTO CTA. CTE/CCE")
+                      && !infoBanco[i, 2].Contains("IVA"))
                 {
                     infoBancoNoEnOctopus[t, 0] = infoBanco[i, 0];
                     infoBancoNoEnOctopus[t, 1] = infoBanco[i, 1];
@@ -537,12 +679,11 @@ namespace ComparadorWebform
                     sumaXCodigo = CalcularSumatoriaCodigosExcluidosBancoSantander(infoBanco);
                     break;
                 case Bancos.ICBC:
-                    sumaXCodigo = CalcularSumatoriaCodigosExcluidosBancoICBC(infoBanco);
-                    // ProcesarExcelBancoICBC(infoBanco, separadorMilesAmericano, archivoBanco, separadorMilesAmericano);
+                    sumaXCodigo = CalcularSumatoriaCodigosExcluidosBancoICBC(infoBanco);                   
                     break;
 
                 case Bancos.Galicia:
-                    Console.WriteLine("Case 2");
+                    sumaXCodigo = CalcularSumatoriaCodigosExcluidosBancoGalicia(infoBanco);
                     break;
 
 
@@ -684,6 +825,73 @@ namespace ComparadorWebform
             return sumaXCodigo;
         }
 
+
+
+        public decimal[] CalcularSumatoriaCodigosExcluidosBancoGalicia(string[,] infoBanco)
+        {
+            int i = 0;
+            decimal importe;
+            decimal sumatoria = 0;
+            decimal deb = 0;
+            decimal cre = 0;
+            decimal mantenimiento = 0;
+            decimal iva = 0;
+
+
+
+
+
+
+
+            decimal[] sumaXCodigo = new decimal[10];
+
+            while (!string.IsNullOrEmpty(infoBanco[i, 0]))
+            {
+
+                if (infoBanco[i, 2].Contains("IMP. DEB. LEY 25413 GRAL.")
+                    || infoBanco[i, 2].Contains("IMP. CRE. LEY 25413 GRAL.") 
+                    || infoBanco[i, 2].Contains("COMISION MANTENIMIENTO CTA. CTE/CCE")
+                      || infoBanco[i, 2].Contains("IVA") )
+                {
+
+                    importe = Convert.ToDecimal(infoBanco[i, 3]);
+                    sumatoria = sumatoria + importe;
+                }
+
+                switch (infoBanco[i, 2])
+                {
+                    case "IMP. DEB. LEY 25413 GRAL.":
+                        deb = deb + Convert.ToDecimal(infoBanco[i, 3]);
+                        break;
+                    case "IMP. CRE. LEY 25413 GRAL.":
+                        cre = cre + Convert.ToDecimal(infoBanco[i, 3]);
+                        break;
+                    case "COMISION MANTENIMIENTO CTA. CTE/CCE":
+                        mantenimiento  = mantenimiento + Convert.ToDecimal(infoBanco[i, 3]);
+                        break;
+                    case "IVA":
+                        iva = iva + Convert.ToDecimal(infoBanco[i, 3]);
+                        break;
+                   
+
+                }
+
+
+
+                i++;
+            }
+
+
+            sumaXCodigo[0] = deb;
+            sumaXCodigo[1] = cre;
+            sumaXCodigo[2] = mantenimiento;
+            sumaXCodigo[3] = iva;      
+            sumaXCodigo[4] = sumatoria;
+
+
+            return sumaXCodigo;
+        }
+
         public bool GenerarReporteTXT(string[,] infoBancoNoEnOctopus, string[,] infoOctopusNoEnBanco, decimal[] sumatoriaCodigosBancoExcluidos)
         {
             string fileName = @"C:\Desarrollos\ComparadorArchivos\ComparadorArchivos\Output\ReporteComparacion.txt";
@@ -807,9 +1015,14 @@ namespace ComparadorWebform
 
                     //  oWorksheet.Cells(i, 1) = infoBancoNoEnOctopus[j, 0].ToString();
                     oWorksheet.Cells("A" + i).Value = infoBancoNoEnOctopus[j, 0].ToString();
-                    oWorksheet.Cells("B" + i).Value = infoBancoNoEnOctopus[j, 1].ToString();
+
+                    //Para banco galicia no viene código
+                    if (!string.IsNullOrEmpty(infoBancoNoEnOctopus[j, 1]))
+                        oWorksheet.Cells("B" + i).Value = infoBancoNoEnOctopus[j, 1].ToString();
+
+
                     oWorksheet.Cells("C" + i).Value = infoBancoNoEnOctopus[j, 2].ToString();
-                    oWorksheet.Cells("D" + i).Value = infoBancoNoEnOctopus[j, 3].ToString();
+                    oWorksheet.Cells("D" + i).Value = Convert.ToDecimal ( infoBancoNoEnOctopus[j, 3].ToString());
 
                     i++;
                     j++;
@@ -838,8 +1051,8 @@ namespace ComparadorWebform
                 {
                     oWorksheet.Cells("A" + i).Value = infoOctopusNoEnBanco[j, 0];
                     oWorksheet.Cells("C" + i).Value = infoOctopusNoEnBanco[j, 1];
-                    oWorksheet.Cells("D" + i).Value = infoOctopusNoEnBanco[j, 2];
-                    oWorksheet.Cells("E" + i).Value = infoOctopusNoEnBanco[j, 3];
+                    oWorksheet.Cells("D" + i).Value =  Convert.ToDecimal (infoOctopusNoEnBanco[j, 2].ToString());
+                    oWorksheet.Cells("E" + i).Value = Convert.ToDecimal(infoOctopusNoEnBanco[j, 3].ToString());
 
                     j++;
                     i++;
@@ -897,7 +1110,20 @@ namespace ComparadorWebform
                         break;
 
                     case Bancos.Galicia:
-                        Console.WriteLine("Case 2");
+                        oWorksheet.Cell("A" + i).Value = "Sumatoria IMP. DEB. LEY 25413 GRAL. ";
+                        oWorksheet.Cell("B" + i).Value = sumatoriaCodigosBancoExcluidos[0];
+                        i++;
+                        oWorksheet.Cell("A" + i).Value = "Sumatoria IMP. CRE. LEY 25413 GRAL. ";
+                        oWorksheet.Cell("B" + i).Value = sumatoriaCodigosBancoExcluidos[1];
+                        i++;
+                        oWorksheet.Cell("A" + i).Value = "Sumatoria COMISION MANTENIMIENTO CTA. CTE/CCE ";
+                        oWorksheet.Cell("B" + i).Value = sumatoriaCodigosBancoExcluidos[2];    
+                        i++;
+                        oWorksheet.Cell("A" + i).Value = "Sumatoria IVA ";
+                        oWorksheet.Cell("B" + i).Value = sumatoriaCodigosBancoExcluidos[3];
+                        i++;
+                        oWorksheet.Cells("A" + i).Value = "TOTAL CODIGOS EXCLUIDOS ";
+                        oWorksheet.Cells("B" + i).Value = sumatoriaCodigosBancoExcluidos[4];
                         break;
 
                 }
