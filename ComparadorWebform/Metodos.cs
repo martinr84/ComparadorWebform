@@ -985,17 +985,26 @@ namespace ComparadorWebform
 
 
                 oWorksheet.Cell("A1").Value = "COMPARACIÓN DE ARCHIVOS";
+                oWorksheet.Cell("A1").Style.Fill.BackgroundColor = XLColor.Orange;
+
 
                 oWorksheet.Cell("A3").Value = "Conceptos presentes en Banco y no en Octopus";
-
+                oWorksheet.Cell("A3").Style.Fill.BackgroundColor = XLColor.LightGreen;
 
 
 
 
                 oWorksheet.Cell("A4").Value = "FECHA";
+                oWorksheet.Cell("A4").Style.Fill.BackgroundColor = XLColor.Yellow;
+
                 oWorksheet.Cell("B4").Value = "CÓDIGO";
+                oWorksheet.Cell("B4").Style.Fill.BackgroundColor = XLColor.Yellow;
+
                 oWorksheet.Cell("C4").Value = "CONCEPTO";
+                oWorksheet.Cell("C4").Style.Fill.BackgroundColor = XLColor.Yellow;
+
                 oWorksheet.Cell("D4").Value = "IMPORTE";
+                oWorksheet.Cell("D4").Style.Fill.BackgroundColor = XLColor.Yellow;
 
                 i = 5;
                 int j = 0;
@@ -1025,12 +1034,23 @@ namespace ComparadorWebform
 
                 oWorksheet.Cell("A" + i).Value = "Conceptos presentes en Octoupus y no en Banco";
 
+                oWorksheet.Cell("A" + i).Style.Fill.BackgroundColor = XLColor.LightGreen;
+
 
                 i = i + 1;
                 oWorksheet.Cells("A" + i).Value = "FECHA";
+                oWorksheet.Cells("A" + i).Style.Fill.BackgroundColor = XLColor.Yellow;
+
+                oWorksheet.Cells("B" + i).Style.Fill.BackgroundColor = XLColor.Yellow;
+
                 oWorksheet.Cells("C" + i).Value = "CONCEPTO";
+                oWorksheet.Cells("C" + i).Style.Fill.BackgroundColor = XLColor.Yellow;
+
                 oWorksheet.Cells("D" + i).Value = "DEBE";
+                oWorksheet.Cells("D" + i).Style.Fill.BackgroundColor = XLColor.Yellow;
+
                 oWorksheet.Cells("E" + i).Value = "HABER";
+                oWorksheet.Cells("E" + i).Style.Fill.BackgroundColor = XLColor.Yellow;
 
 
                 //for (int i = 0; i < 50; i++)
@@ -1050,6 +1070,7 @@ namespace ComparadorWebform
                 i++;
 
                 oWorksheet.Cell("A" + i).Value = "Sumatoria Códigos Excluidos Banco:";
+                oWorksheet.Cell("A" + i).Style.Fill.BackgroundColor = XLColor.LightGreen;
 
                 i++;
 
