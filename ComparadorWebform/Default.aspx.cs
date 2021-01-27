@@ -26,33 +26,41 @@ namespace ComparadorWebform
         
 
         protected void BtnEjecutarProceso_Click(object sender, EventArgs e)
-        {      
-
+        {
+                     
+            bool separadorMilesAmericano;
+            string nombreArchivoBanco = string.Empty;
+            string nombreArchivoOctopus = string.Empty;
+            string input = "~/Archivos/Input/";//poner la ruta donde quieres que quede el archivo
+            string output = "~/Archivos/Output/";//poner la ruta donde quieres que quede el archivo
+            string carpetaInput = Server.MapPath(input);
+            string carpetaOutput = Server.MapPath(output);
             //Borramos los archivos que existen en la carpeta de proceso
             DirectoryInfo dir = new DirectoryInfo(Server.MapPath("~/Archivos/Input"));
+            string carpetaDestino = Server.MapPath(output);
+            string SaveLocation = "";
+            string fecha = DateTime.Now.ToString("dd_MM_yyyy");
+            string nombreBanco = ""; 
 
             foreach (FileInfo fi in dir.GetFiles())
             {
                 fi.Delete();
             }
 
-            bool separadorMilesAmericano;
+            
             if (rbdDecimales.SelectedValue.ToString() == "0")
                 separadorMilesAmericano = true;
             else
                 separadorMilesAmericano = false;
 
 
-            string nombreArchivoBanco = string.Empty;
-            string nombreArchivoOctopus = string.Empty;
-
-            string destino = "~/Archivos/Input/";//poner la ruta donde quieres que quede el archivo
+       
 
            
             //Subimos archivo banco          
-            string carpetaDestino = Server.MapPath(destino);
+      
             nombreArchivoBanco = System.IO.Path.GetFileName(fuBanco.PostedFile.FileName);
-            string SaveLocation = carpetaDestino + nombreArchivoBanco;
+            SaveLocation = carpetaInput + nombreArchivoBanco; 
 
             fuBanco.PostedFile.SaveAs(SaveLocation);
 
@@ -60,7 +68,7 @@ namespace ComparadorWebform
 
             //Subimos archivo octopus      
             nombreArchivoOctopus = System.IO.Path.GetFileName(fuOctopus.PostedFile.FileName);
-            SaveLocation = carpetaDestino + nombreArchivoOctopus;
+            SaveLocation = carpetaInput + nombreArchivoOctopus;
             fuOctopus.PostedFile.SaveAs(SaveLocation);
 
 
@@ -73,10 +81,27 @@ namespace ComparadorWebform
 
            
             //Subimos el archivo generado
-            destino = "~/Archivos/Output/";//poner la ruta donde quieres que quede el archivo
-            string carpetaDestinoGenerado = Server.MapPath(destino);
+            output = "~/Archivos/Output/";//poner la ruta donde quieres que quede el archivo
 
-            oWorkbook.SaveAs(carpetaDestinoGenerado + "ArchivoComparacionExcel.xlsx");
+
+            switch (Convert.ToInt32(ddlBancos.SelectedItem.Value))
+            {
+                case Bancos.Santander:
+                    nombreBanco = "Santander";
+                    break;
+
+                case Bancos.ICBC:
+                    nombreBanco = "ICBC";
+                    break;
+
+                case Bancos.Galicia:
+                    nombreBanco = "Galicia";
+                    break;
+
+
+            }
+
+            oWorkbook.SaveAs(carpetaOutput  + "ArchivoComparacion_" + nombreBanco + "_" + fecha   +  ".xlsx");
             
             lblNombreArchivoBanco.Text = nombreArchivoBanco;
             lblNombreArchivoOctopus.Text = nombreArchivoOctopus;
@@ -95,8 +120,28 @@ namespace ComparadorWebform
 
         protected void BtnDownload_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Archivos/Output/ArchivoComparacionExcel.xlsx");
-           
+            //Response.Redirect("~/Archivos/Output/ArchivoComparacionExcel.xlsx");
+            string nombreBanco = "";
+            switch (Convert.ToInt32(ddlBancos.SelectedItem.Value))
+            {
+                case Bancos.Santander:
+                    nombreBanco = "Santander";
+                    break;
+
+                case Bancos.ICBC:
+                    nombreBanco = "ICBC";
+                    break;
+
+                case Bancos.Galicia:
+                    nombreBanco = "Galicia";
+                    break;
+
+
+            }
+
+
+            Response.Redirect("~/Archivos/Output/ArchivoComparacion_" + nombreBanco + "_" + DateTime.Now.ToString("dd_MM_yyyy") + ".xlsx");
+
         }
 
         protected void btnNuevaComparacion_Click(object sender, EventArgs e)

@@ -956,26 +956,25 @@ namespace ComparadorWebform
             return true;
         }
 
-        //public bool GenerarReporteExcel(string[,] infoBancoNoEnOctopus, string[,] infoOctopusNoEnBanco, decimal[] sumatoriaCodigosBancoExcluidos)
         public XLWorkbook GenerarReporteExcel(int banco,string[,] infoBancoNoEnOctopus, string[,] infoOctopusNoEnBanco, decimal[] sumatoriaCodigosBancoExcluidos)
         {
             //   Application excel;
             XLWorkbook oWorkbook = new XLWorkbook();// = new Workbook ();
             var oWorksheet = oWorkbook.AddWorksheet("Comparativa");
             int i = 0;
-            //  Range celLrangE;
 
-            string fileName = @"C:\Desarrollos\ComparadorArchivos\ComparadorWebform\ComparadorWebform\Archivos\Output\ArchivoComparacionExcel.xlsx";
+
+           // string fileName = @"C:\Desarrollos\ComparadorArchivos\ComparadorWebform\ComparadorWebform\Archivos\Output\ArchivoComparacionExcel.xlsx";
 
 
 
             try
             {
-                // Check if file already exists. If yes, delete it.     
-                if (File.Exists(fileName))
-                {
-                    File.Delete(fileName);
-                }
+                //// Check if file already exists. If yes, delete it.     
+                //if (File.Exists(fileName))
+                //{
+                //    File.Delete(fileName);
+                //}
 
                 //excel = new Application();
                 //excel.Visible = false;
@@ -983,17 +982,7 @@ namespace ComparadorWebform
                 //worKbooK = excel.Workbooks.Add(Type.Missing);
 
 
-                // worKsheeT = (Microsoft.Office.Interop.Excel.Worksheet)worKbooK.ActiveSheet;
-                // oWorksheet..Name = "ComparacionArchivos";
 
-
-                //  worKsheeT.Range[worKsheeT.Cells[1, 1], worKsheeT.Cells[1, 8]].Merge();
-                // worKsheeT.Cells[1, 1] = "Student Report Card";
-
-
-
-
-                //  oWorksheet.Cell("A1").Value = "Nombre";
 
                 oWorksheet.Cell("A1").Value = "COMPARACIÓN DE ARCHIVOS";
 
