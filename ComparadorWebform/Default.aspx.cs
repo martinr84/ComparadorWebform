@@ -18,9 +18,12 @@ namespace ComparadorWebform
         protected void Page_Load(object sender, EventArgs e)
         {
           
-            lblNombreArchivoBanco.Visible = false;
-            lblNombreArchivoOctopus.Visible = false;
+          //  lblNombreArchivoBanco.Visible = false;
+            //lblNombreArchivoOctopus.Visible = false;
             btnDownload.Visible = false;
+            panelInfoProcesada.Visible = false;
+            lblBanco.Visible = false;
+            lblNombreArchivoBanco0.Visible = false;
            
             }
         
@@ -108,7 +111,9 @@ namespace ComparadorWebform
             lblNombreArchivoBanco.Visible = true;
             lblNombreArchivoOctopus.Visible = true;   
             btnDownload.Visible = true;
-
+            panelInfoProcesada.Visible = true;
+            lblNombreArchivoBanco0.Text = "Banco:" +  nombreBanco;
+            lblNombreArchivoBanco0.Visible = true;
 
 
         }
