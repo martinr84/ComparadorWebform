@@ -12,7 +12,11 @@ namespace ComparadorWebform
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (User.Identity.IsAuthenticated)
+            {
+                // Redirect to Home (since the user is already authenticated)
+                Response.Redirect("Default.aspx");
+            }
 
         }
 
