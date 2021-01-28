@@ -28,7 +28,6 @@
     </asp:DropDownList>
     <br />
     <br />
-    <br />
     <asp:Label ID="lblBanco" runat="server" Text="Archivo Banco"></asp:Label>
     <br />
     <asp:FileUpload ID="fuBanco" runat="server"  class="btn btn-primary"/>    
@@ -49,21 +48,26 @@
 <table>
   <tr>
       <td>
-   <asp:Button ID="btnEjecutarProceso" runat="server" OnClick="BtnEjecutarProceso_Click" Text="Ejecutar proceso"   CssClass="btn btn-primary" Height="71px" OnClientClick= "return validarIngresos()" Width="246px"  />
-</td>        
-      <td>               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</td>
-    <td >     
-        &nbsp;&nbsp;&nbsp;<asp:Label ID="lblNombreArchivoBanco0" runat="server" Font-Size="Small" Text="lblBanco"></asp:Label>
-                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     
-        <asp:Panel ID="panelInfoProcesada" runat="server" GroupingText=" " Width="200px">
-                   &nbsp;&nbsp;&nbsp;<asp:Label ID="lblNombreArchivoBanco" runat="server" Font-Size="Small" Text="lblBanco"></asp:Label>
-                   <br />
-                   <br />
-                   &nbsp;
-                   <asp:Label ID="lblNombreArchivoOctopus" runat="server" Font-Size="Small" Text="lblOctopus"></asp:Label>
-                     </asp:Panel>
+            <asp:Button ID="btnEjecutarProceso" runat="server" OnClick="BtnEjecutarProceso_Click" Text="Ejecutar proceso"   CssClass="btn btn-primary" Height="71px" OnClientClick= "return validarIngresos()" Width="246px"  />
+      </td> 
+          
+
+
+      <td style="padding-left:60px;width:250px">         
+           <asp:Label ID="lblNombreArchivoBanco0" runat="server" Font-Size="Small" Text="lblBanco" CssClass="btn btn-info"></asp:Label>      
+      </td>      
+      <td style="width:250px">         
+           <asp:Label ID="lblDecimales" runat="server" Font-Size="Small" Text="lblDecimales" CssClass="btn btn-info"></asp:Label>      
+      </td>
+      <td style="width:250px">   
+            <asp:Label ID="lblNombreArchivoBanco" runat="server" Font-Size="Small" Text="lblBanco" CssClass="btn btn-info"></asp:Label>
+      </td>    
+       <td style="width:250px">   
+         <asp:Label ID="lblNombreArchivoOctopus" runat="server" Font-Size="Small" Text="lblOctopus" CssClass="btn btn-info"></asp:Label>          
     </td>
-    
+      <td>
+             
+      </td>       
   </tr> 
 
 </table>                

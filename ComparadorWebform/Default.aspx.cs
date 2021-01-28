@@ -20,10 +20,13 @@ namespace ComparadorWebform
           
           //  lblNombreArchivoBanco.Visible = false;
             //lblNombreArchivoOctopus.Visible = false;
-            btnDownload.Visible = false;
-            panelInfoProcesada.Visible = false;
+            btnDownload.Visible = false;         
             lblBanco.Visible = false;
             lblNombreArchivoBanco0.Visible = false;
+            lblNombreArchivoOctopus.Visible = false;
+            lblDecimales.Visible = false;
+            lblNombreArchivoBanco.Visible = false;
+       
            
             }
         
@@ -104,17 +107,28 @@ namespace ComparadorWebform
 
             }
 
-            oWorkbook.SaveAs(carpetaOutput  + "ArchivoComparacion_" + nombreBanco + "_" + fecha   +  ".xlsx");
+
+            if (Convert.ToInt32 (rbdDecimales.SelectedItem.Value) == 0)
+                lblDecimales.Text = "Signo decimal es el Punto";
+            else
+                lblDecimales.Text = "Signo decimal es la Coma";
+
+
+
+
+             oWorkbook.SaveAs(carpetaOutput  + "ArchivoComparacion_" + nombreBanco + "_" + fecha   +  ".xlsx");
             
             lblNombreArchivoBanco.Text = nombreArchivoBanco;
             lblNombreArchivoOctopus.Text = nombreArchivoOctopus;
             lblNombreArchivoBanco.Visible = true;
             lblNombreArchivoOctopus.Visible = true;   
             btnDownload.Visible = true;
-            panelInfoProcesada.Visible = true;
-            lblNombreArchivoBanco0.Text = "Banco:" +  nombreBanco;
+            //panelInfoProcesada.Visible = true;
+            lblNombreArchivoBanco0.Text = "Banco:" +  nombreBanco;     
+            lblBanco.Visible = true;
             lblNombreArchivoBanco0.Visible = true;
-
+            lblNombreArchivoOctopus.Visible = true;
+            lblDecimales.Visible = true;
 
         }
 
